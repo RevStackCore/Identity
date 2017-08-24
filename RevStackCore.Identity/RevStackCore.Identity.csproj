@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>David Sheets</Authors>
+    <Company>MIS</Company>
+    <Description>RevStackCore implementation of the Identity framework.</Description>
+    <PackageProjectUrl>https://github.com/RevStackCore/Identity.git</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/RevStackCore/Identity/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright 2017</Copyright>
+    <RepositoryUrl>https://github.com/RevStackCore/Identity.git</RepositoryUrl>
+    <RepositoryType />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.0.0" />
+    <PackageReference Include="RevStackCore.Extensions.Mvc" Version="1.0.2" />
+    <PackageReference Include="RevStackCore.Pattern" Version="1.0.5" />
+  </ItemGroup>
+
+</Project>

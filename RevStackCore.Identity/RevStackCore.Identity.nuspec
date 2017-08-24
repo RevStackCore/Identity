@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RevStackCore.Identity</id>
+    <version>1.0.0</version>
+    <title>RevStackCore.Identity</title>
+    <authors>David Sheets</authors>
+    <owners>D. Sheets, S. Francis</owners>
+    <licenseUrl>https://github.com/RevStackCore/Identity/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/RevStackCore/Identity.git</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>RevStackCore implementation of the Identity Framework.</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Identity .net core RevStack Repository</tags>
+  </metadata>
+</package>
