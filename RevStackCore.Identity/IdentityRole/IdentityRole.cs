@@ -8,6 +8,7 @@ namespace RevStackCore.Identity
         public string Id { get; set; }
         public string Name { get; set; }
         public string NormalizedName { get; set; }
+        public string ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
 
         public IdentityRole()
         {
@@ -20,5 +21,7 @@ namespace RevStackCore.Identity
         public TKey Id { get; set; }
         public string Name { get; set; }
         public string NormalizedName { get; set; }
+        public string ConcurrencyStamp { get; set; } = Guid.NewGuid().ToString();
+		
     }
 }
