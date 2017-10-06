@@ -5,17 +5,16 @@ using System.Text;
 
 namespace RevStackCore.Identity
 {
-    public static partial class Extensions
+    public static partial class ExtensionHelpers
     {
 
-        /// <summary>
-        /// Exception handling for SingleOrDefault() 
-        /// </summary>
-        /// <typeparam name="TSource"></typeparam>
-        /// <param name="src"></param>
-        /// <param name="parseSequence"></param>
-        /// <returns></returns>
-        public static TSource ToSingleOrDefault<TSource>(this IEnumerable<TSource> src)
+		/// <summary>
+		/// Exception handling for SingleOrDefault() 
+		/// </summary>
+		/// <returns>The single or default.</returns>
+		/// <param name="src">Source.</param>
+		/// <typeparam name="TSource">The 1st type parameter.</typeparam>
+		public static TSource ToSingleOrDefault<TSource>(this IEnumerable<TSource> src)
         {
             try
             {
@@ -35,14 +34,16 @@ namespace RevStackCore.Identity
         }
 
 
-        /// <summary>
-        /// Uses EqualityComparer<T>.Default as an equality comparison for generics not constrained by a reference type
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <returns></returns>
-        public static bool Compare<TSource, TKey>(this TSource src, TKey id, TKey value)
+		/// <summary>
+		/// Uses EqualityComparer<T>.Default as an equality comparison for generics not constrained by a reference type
+		/// </summary>
+		/// <returns>The compare.</returns>
+		/// <param name="src">Source.</param>
+		/// <param name="id">Identifier.</param>
+		/// <param name="value">Value.</param>
+		/// <typeparam name="TSource">The 1st type parameter.</typeparam>
+		/// <typeparam name="TKey">The 2nd type parameter.</typeparam>
+		public static bool Compare<TSource, TKey>(this TSource src, TKey id, TKey value)
         {
             return EqualityComparer<TKey>.Default.Equals(id, value);
         }
