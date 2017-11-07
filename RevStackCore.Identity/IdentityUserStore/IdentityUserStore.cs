@@ -211,22 +211,22 @@ namespace RevStackCore.Identity
         /// <summary>
 		///     Finds and returns a user, if any, who has the specified normalized user name.
 		/// </summary>
-		/// <param name="normalizedUserName">The normalized user name to search for.</param>
+		/// <param name="userName">The normalized user name to search for.</param>
 		/// <param name="cancellationToken">
 		///     The <see cref="CancellationToken" /> used to propagate notifications that the operation
 		///     should be canceled.
 		/// </param>
 		/// <returns>
 		///     The <see cref="Task" /> that represents the asynchronous operation, containing the user matching the specified
-		///     <paramref name="normalizedUserName" /> if it exists.
+		///     <paramref name="userName" /> if it exists.
 		/// </returns>
-		public async Task<TUser> FindByNameAsync(string normalizedUserName,
+		public async Task<TUser> FindByNameAsync(string userName,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            return await Task.Run(() => _findByName(normalizedUserName), cancellationToken);
+            return await Task.Run(() => _findByName(userName), cancellationToken);
         }
 
         /// <summary>
@@ -1314,7 +1314,7 @@ namespace RevStackCore.Identity
 
         private TUser _findByName(string userName)
         {
-            return (TUser)_userRepository.Find(x => x.UserName == userName).ToSingleOrDefault();
+            return (TUser)_userRepository.Find(x => x.UserName.ToLower() == userName.ToLower()).ToSingleOrDefault();
         }
 
         private int _update(TUser user)
@@ -1327,7 +1327,7 @@ namespace RevStackCore.Identity
                     return 1;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return 0;
             }

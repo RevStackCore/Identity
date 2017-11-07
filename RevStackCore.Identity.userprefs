@@ -1,8 +1,9 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="RevStackCore.Identity/IdentityRoleStore/IdentityRoleStore.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="RevStackCore.Identity/IdentityUserStore/IdentityUserStore.cs">
     <Files>
-      <File FileName="RevStackCore.Identity/Extensions/Misc.cs" Line="11" Column="9" />
+      <File FileName="RevStackCore.Identity/Extensions/Misc.cs" Line="17" Column="3" />
       <File FileName="RevStackCore.Identity/IdentityRoleStore/IdentityRoleStore.cs" Line="256" Column="55" />
+      <File FileName="RevStackCore.Identity/IdentityUserStore/IdentityUserStore.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />

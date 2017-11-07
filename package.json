@@ -1,0 +1,19 @@
+{
+  "name": "RevStackCore.Identity",
+  "version": "1.0.4",
+  "description": "RevStackCore implementation of the AspNetCore Identity framework.",
+  "main": "RevStackCore.Identity.sln",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RevStackCore/Identity.git"
+  },
+  "author": "S. Francis",
+  "license": "MIT",
+  "bugs": {
+		"url": "https://github.com/RevStackCore/Identity/issues"
+  },
+	"homepage": "https://github.com/RevStackCore/Identity"
+}
