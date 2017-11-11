@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using RevStackCore.Pattern;
 using RevStackCore.Extensions.Mvc;
@@ -242,7 +243,11 @@ namespace RevStackCore.Identity
         #region "Private Members"
         private void _create(TRole role)
         {
-            _roleRepository.Add(role);
+            var existing = _roleRepository.Find(x => x.Name.ToLower() == role.Name.ToLower());
+            if(!existing.Any())
+            {
+                _roleRepository.Add(role);
+            }
         }
 
         private int _delete(TRole role)
