@@ -267,7 +267,7 @@ namespace RevStackCore.Identity
         }
         private TRole _findByName(string roleName)
         {
-            return (TRole)_roleRepository.Find(x => x.Name==roleName).ToSingleOrDefault();
+            return (TRole)_roleRepository.Find(x => x.Name.ToLower()==roleName.ToLower()).ToSingleOrDefault();
         }
 
         private int _update(TRole role)
