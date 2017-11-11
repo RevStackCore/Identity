@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using RevStackCore.Pattern;
-using RevStackCore.Extensions.Mvc;
-using Microsoft.AspNetCore.Identity;
 using System.Threading;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Identity;
+using RevStackCore.Pattern;
 
 namespace RevStackCore.Identity
 {
@@ -236,6 +235,14 @@ namespace RevStackCore.Identity
             var roleId = ConvertIdFromString(id);
 
             return await Task.FromResult(_findById(roleId));
+        }
+        public IQueryable<TRole> Roles
+        {
+            get
+            {
+                var roles = _roleRepository.Get();
+                return roles.AsQueryable();
+            }
         }
         #endregion
 
