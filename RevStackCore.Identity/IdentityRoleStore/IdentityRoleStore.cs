@@ -236,6 +236,11 @@ namespace RevStackCore.Identity
 
             return await Task.FromResult(_findById(roleId));
         }
+
+        /// <summary>
+        /// Gets the roles.
+        /// </summary>
+        /// <value>The roles.</value>
         public IQueryable<TRole> Roles
         {
             get
@@ -244,6 +249,7 @@ namespace RevStackCore.Identity
                 return roles.AsQueryable();
             }
         }
+       
         #endregion
 
 
@@ -322,6 +328,9 @@ namespace RevStackCore.Identity
 
         }
         private bool _disposed = false;
+
+
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)

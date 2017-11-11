@@ -1274,6 +1274,18 @@ namespace RevStackCore.Identity
 
             await Task.Run(() => _replaceUserClaim(user, claim, newClaim), cancellationToken);
         }
+        /// <summary>
+        /// Gets the users.
+        /// </summary>
+        /// <value>The users.</value>
+        public IQueryable<TUser> Users
+        {
+            get
+            {
+                var users = _userRepository.Get();
+                return users.AsQueryable();
+            }
+        }
         #endregion
 
         #region "Private Members"
@@ -1811,6 +1823,8 @@ namespace RevStackCore.Identity
            
         }
         private bool _disposed = false;
+
+
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
