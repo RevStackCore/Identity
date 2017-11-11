@@ -1465,7 +1465,7 @@ namespace RevStackCore.Identity
 
         private void _addToRole(TUser user, string roleName)
         {
-            var role = _roleRepository.Find(x => x.Name == roleName).ToSingleOrDefault();
+            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName.ToLower()).ToSingleOrDefault();
             if(role!=null)
             {
                 var identityUserRole = CreateUserRole(user, role.Id);
@@ -1478,7 +1478,7 @@ namespace RevStackCore.Identity
 
         private void _removeFromRole(TUser user, string roleName)
         {
-            var role = _roleRepository.Find(x => x.Name == roleName).ToSingleOrDefault();
+            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName.ToLower()).ToSingleOrDefault();
             if (role != null)
             {
                 var userRole = _userRoleRepository.Find(x => x.Compare(x.UserId, user.Id) && x.RoleId == role.Id.ToString()).ToSingleOrDefault();
@@ -1491,7 +1491,7 @@ namespace RevStackCore.Identity
 
         private IList<TUser> _getUsersInRole(string roleName)
         {
-            var role = _roleRepository.Find(x => x.Name == roleName).ToSingleOrDefault();
+            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName.ToLower()).ToSingleOrDefault();
             if (role != null)
             {
                 var userRoles = _userRoleRepository.Find(x => x.RoleId == role.Id.ToString());
