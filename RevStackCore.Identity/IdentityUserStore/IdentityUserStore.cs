@@ -1547,7 +1547,9 @@ namespace RevStackCore.Identity
             var roles = _userRoleRepository.Find(x => x.Compare(x.UserId, user.Id));
             if (roles.Any())
             {
-                return _listOfRoles(roles).Select(x => x.ToLower() == roleName.ToLower()).SingleOrDefault();
+                var rolesList = roles.ToList();
+                return rolesList.Select(x => x.RoleId.ToLower() == roleName.ToLower()).SingleOrDefault();
+                //return _listOfRoles(roles).Select(x => x.ToLower() == roleName.ToLower()).SingleOrDefault();
             }
             else
             {
