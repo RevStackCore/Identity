@@ -1493,7 +1493,7 @@ namespace RevStackCore.Identity
             var role = _roleRepository.Find(x => x.Name.ToLower() == roleName.ToLower()).ToSingleOrDefault();
             if (role != null)
             {
-                var userRole = _userRoleRepository.Find(x => x.Compare(x.UserId, user.Id) && x.RoleId == role.Id.ToString()).ToSingleOrDefault();
+                var userRole = _userRoleRepository.Find(x => x.Compare(x.UserId, user.Id) && x.RoleId.ToLower() == role.Id.ToString().ToLower()).ToSingleOrDefault();
                 if(userRole !=null)
                 {
                     _userRoleRepository.Delete(userRole);
@@ -1506,7 +1506,7 @@ namespace RevStackCore.Identity
             var role = _roleRepository.Find(x => x.Name.ToLower() == roleName.ToLower()).ToSingleOrDefault();
             if (role != null)
             {
-                var userRoles = _userRoleRepository.Find(x => x.RoleId == role.Id.ToString());
+                var userRoles = _userRoleRepository.Find(x => x.RoleId.ToLower() == role.Id.ToString().ToLower());
                 if (userRoles.Any())
                 {
                     return _listOfUsers(userRoles);
@@ -1547,7 +1547,7 @@ namespace RevStackCore.Identity
             var roles = _userRoleRepository.Find(x => x.Compare(x.UserId, user.Id));
             if (roles.Any())
             {
-                return _listOfRoles(roles).Select(x => x == roleName).SingleOrDefault();
+                return _listOfRoles(roles).Select(x => x.ToLower() == roleName.ToLower()).SingleOrDefault();
             }
             else
             {
