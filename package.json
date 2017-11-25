@@ -1,6 +1,6 @@
 {
   "name": "RevStackCore.Identity",
-  "version": "1.0.12",
+  "version": "1.1.0",
   "description": "RevStackCore implementation of the AspNetCore Identity framework.",
   "main": "RevStackCore.Identity.sln",
   "scripts": {
