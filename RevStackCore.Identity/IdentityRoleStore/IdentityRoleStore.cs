@@ -256,7 +256,8 @@ namespace RevStackCore.Identity
         #region "Private Members"
         private void _create(TRole role)
         {
-            var existing = _roleRepository.Find(x => x.Name.ToLower() == role.Name.ToLower());
+            string roleName = role.Name.ToLower();
+            var existing = _roleRepository.Find(x => x.Name.ToLower() == roleName);
             if(!existing.Any())
             {
                 _roleRepository.Add(role);
@@ -271,16 +272,17 @@ namespace RevStackCore.Identity
 
         private TRole _find(TRole role)
         {
-            return (TRole)_roleRepository.Find(x => x.Compare(x.Id, role.Id)).ToSingleOrDefault();
+            return (TRole)_roleRepository.Find(x => x.Id.Equals(role.Id)).ToSingleOrDefault();
         }
 
         private TRole _findById(TKey roleId)
         {
-            return (TRole)_roleRepository.Find(x => x.Compare(x.Id, roleId)).ToSingleOrDefault();
+            return (TRole)_roleRepository.Find(x => x.Id.Equals(roleId)).ToSingleOrDefault();
         }
         private TRole _findByName(string roleName)
         {
-            return (TRole)_roleRepository.Find(x => x.Name.ToLower()==roleName.ToLower()).ToSingleOrDefault();
+            roleName = roleName.ToLower();
+            return (TRole)_roleRepository.Find(x => x.Name.ToLower()==roleName).ToSingleOrDefault();
         }
 
         private int _update(TRole role)

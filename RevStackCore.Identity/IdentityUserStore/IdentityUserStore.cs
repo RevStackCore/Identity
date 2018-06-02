@@ -1321,12 +1321,13 @@ namespace RevStackCore.Identity
 
         private TUser _findById(TKey userId)
         {
-            return (TUser)_userRepository.Find(x => x.Compare(x.Id, userId)).ToSingleOrDefault();
+            return (TUser)_userRepository.Find(x => x.Id.Equals(userId)).ToSingleOrDefault();
         }
 
         private TUser _findByName(string userName)
         {
-            return (TUser)_userRepository.Find(x => x.UserName.ToLower() == userName.ToLower()).ToSingleOrDefault();
+            userName = userName.ToLower();
+            return (TUser)_userRepository.Find(x => x.UserName.ToLower() == userName).ToSingleOrDefault();
         }
 
         private int _update(TUser user)
@@ -1359,7 +1360,7 @@ namespace RevStackCore.Identity
 
         private void _removeLogin(TUser user, string loginProvider, string providerKey)
         {
-            var identityLogin = _userLoginRepository.Find(x => x.Compare(x.UserId, user.Id) && x.LoginProvider == loginProvider && x.ProviderKey == providerKey).ToSingleOrDefault();
+            var identityLogin = _userLoginRepository.Find(x => x.UserId.Equals(user.Id) && x.LoginProvider == loginProvider && x.ProviderKey == providerKey).ToSingleOrDefault();
             if(identityLogin != null)
             {
                 _userLoginRepository.Delete(identityLogin);
@@ -1368,7 +1369,7 @@ namespace RevStackCore.Identity
 
         private IList<UserLoginInfo> _getLogins(TUser user)
         {
-            var logins = _userLoginRepository.Find(x => x.Compare(x.UserId, user.Id));
+            var logins = _userLoginRepository.Find(x => x.UserId.Equals(user.Id));
             if(logins.Any())
             {
                 return logins.Select(x => new UserLoginInfo(x.LoginProvider, x.ProviderKey, x.ProviderDisplayName)).ToList();
@@ -1385,7 +1386,7 @@ namespace RevStackCore.Identity
             var userLogin = _userLoginRepository.Find(x => x.LoginProvider == login.LoginProvider && x.ProviderKey == login.ProviderKey).ToSingleOrDefault();
             if(userLogin !=null)
             {
-                user = (TUser)_userRepository.Find(x => x.Compare(x.Id, userLogin.UserId)).ToSingleOrDefault();
+                user = (TUser)_userRepository.Find(x => x.Id.Equals(userLogin.UserId)).ToSingleOrDefault();
             }
             return user;
         }
@@ -1396,14 +1397,14 @@ namespace RevStackCore.Identity
             var userLogin = _userLoginRepository.Find(x => x.LoginProvider == loginProvider && x.ProviderKey == providerKey).ToSingleOrDefault();
             if (userLogin != null)
             {
-                user = (TUser)_userRepository.Find(x => x.Compare(x.Id, userLogin.UserId)).ToSingleOrDefault();
+                user = (TUser)_userRepository.Find(x => x.Id.Equals(userLogin.UserId)).ToSingleOrDefault();
             }
             return user;
         }
 
         private void _replaceUserClaim(TUser user, Claim claim, Claim newClaim)
         {
-            var userClaims = _userClaimRepository.Find(x => x.Compare(x.UserId, user.Id) && x.ClaimType == claim.Type && x.ClaimValue == claim.Value);
+            var userClaims = _userClaimRepository.Find(x => x.UserId.Equals(user.Id) && x.ClaimType == claim.Type && x.ClaimValue == claim.Value);
             if (userClaims.Any())
             {
                 var userClaim = userClaims.FirstOrDefault();
@@ -1416,7 +1417,7 @@ namespace RevStackCore.Identity
 
         private IList<Claim> _getClaims(TUser user)
         {
-            var userClaims = _userClaimRepository.Find(x => x.Compare(x.UserId, user.Id));
+            var userClaims = _userClaimRepository.Find(x => x.UserId.Equals(user.Id));
             if(userClaims.Any())
             {
                 return userClaims.Select(x => new Claim(x.ClaimType, x.ClaimType)).ToList();
@@ -1450,7 +1451,7 @@ namespace RevStackCore.Identity
 
         private void _removeClaim(TUser user, Claim claim)
         {
-            var userClaims = _userClaimRepository.Find(x => x.ClaimType == claim.Type && x.ClaimValue == claim.Value && x.Compare(x.UserId, user.Id));
+            var userClaims = _userClaimRepository.Find(x => x.ClaimType == claim.Type && x.ClaimValue == claim.Value && x.UserId.Equals(user.Id));
             if(userClaims.Any())
             {
                 var userClaim = userClaims.ToSingleOrDefault();
@@ -1477,7 +1478,8 @@ namespace RevStackCore.Identity
 
         private void _addToRole(TUser user, string roleName)
         {
-            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName.ToLower()).ToSingleOrDefault();
+            roleName = roleName.ToLower();
+            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName).ToSingleOrDefault();
             if(role!=null)
             {
                 var identityUserRole = CreateUserRole(user, role.Id);
@@ -1490,10 +1492,12 @@ namespace RevStackCore.Identity
 
         private void _removeFromRole(TUser user, string roleName)
         {
-            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName.ToLower()).ToSingleOrDefault();
+            roleName = roleName.ToLower();
+            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName).ToSingleOrDefault();
             if (role != null)
             {
-                var userRole = _userRoleRepository.Find(x => x.Compare(x.UserId, user.Id) && x.RoleId.ToLower() == role.Id.ToString().ToLower()).ToSingleOrDefault();
+                string roleId = role.Id.ToString().ToLower();
+                var userRole = _userRoleRepository.Find(x => x.UserId.Equals(user.Id) && x.RoleId.ToLower() == roleId).ToSingleOrDefault();
                 if(userRole !=null)
                 {
                     _userRoleRepository.Delete(userRole);
@@ -1503,10 +1507,12 @@ namespace RevStackCore.Identity
 
         private IList<TUser> _getUsersInRole(string roleName)
         {
-            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName.ToLower()).ToSingleOrDefault();
+            roleName = roleName.ToLower();
+            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName).ToSingleOrDefault();
             if (role != null)
             {
-                var userRoles = _userRoleRepository.Find(x => x.RoleId.ToLower() == role.Id.ToString().ToLower());
+                string roleId = role.Id.ToString().ToLower();
+                var userRoles = _userRoleRepository.Find(x => x.RoleId.ToLower() == roleId);
                 if (userRoles.Any())
                 {
                     return _listOfUsers(userRoles);
@@ -1524,7 +1530,7 @@ namespace RevStackCore.Identity
 
         private IList<string> _getRoles(TUser user)
         {
-            var roles = _userRoleRepository.Find(x => x.Compare(x.UserId, user.Id));
+            var roles = _userRoleRepository.Find(x => x.UserId.Equals(user.Id));
             if(roles.Any())
             {
                 return _listOfRoles(roles);
@@ -1544,10 +1550,11 @@ namespace RevStackCore.Identity
 
         private bool _isInRole(TUser user, string roleName)
         {
-            var roles = _userRoleRepository.Find(x => x.Compare(x.UserId, user.Id));
+            var roles = _userRoleRepository.Find(x => x.UserId.Equals(user.Id));
             if (roles.Any())
             {
-                return _listOfRoles(roles).Select(x => x.ToLower() == roleName.ToLower()).SingleOrDefault();
+                roleName = roleName.ToLower();
+                return _listOfRoles(roles).Select(x => x.ToLower() == roleName).SingleOrDefault();
             }
             else
             {
@@ -1628,7 +1635,8 @@ namespace RevStackCore.Identity
 
         private TUser _findByEmail(string email)
         {
-            return (TUser)_userRepository.Find(x => x.Email.ToLower() == email.ToLower()).ToSingleOrDefault();
+            email = email.ToLower();
+            return (TUser)_userRepository.Find(x => x.Email.ToLower() == email).ToSingleOrDefault();
 ;        }
 
         private void _setPhoneNumber(TUser user, string phoneNumber)
