@@ -1327,7 +1327,8 @@ namespace RevStackCore.Identity
         private TUser _findByName(string userName)
         {
             userName = userName.ToLower();
-            return (TUser)_userRepository.Find(x => x.UserName.ToLower() == userName).ToSingleOrDefault();
+            var result = _userRepository.Find(x => x.UserName.ToLower() == userName);
+            return (TUser)result.ToSingleOrDefault();
         }
 
         private int _update(TUser user)
