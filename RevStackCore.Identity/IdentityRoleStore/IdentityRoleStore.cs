@@ -260,6 +260,7 @@ namespace RevStackCore.Identity
             var existing = _roleRepository.Find(x => x.Name.ToLower() == roleName);
             if(!existing.Any())
             {
+                role.NormalizedName = roleName.ToUpper();
                 _roleRepository.Add(role);
             }
         }
@@ -287,6 +288,7 @@ namespace RevStackCore.Identity
 
         private int _update(TRole role)
         {
+            role.NormalizedName = role.Name.ToUpper();
             _roleRepository.Update(role);
             return 1;
         }

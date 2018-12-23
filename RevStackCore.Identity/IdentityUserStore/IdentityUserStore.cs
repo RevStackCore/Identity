@@ -1310,6 +1310,8 @@ namespace RevStackCore.Identity
 
         private void _create(TUser user)
         {
+            user.NormalizedUserName = user.UserName.ToUpper();
+            user.NormalizedEmail = user.NormalizedEmail.ToUpper();
             _userRepository.Add(user);
         }
 
@@ -1593,6 +1595,7 @@ namespace RevStackCore.Identity
         private void _setEmail(TUser user, string email)
         {
             user.Email = email;
+            user.NormalizedEmail = email.ToUpper();
             if(_userExists(user.UserName)) _userRepository.Update(user);
         }
 
@@ -1700,6 +1703,7 @@ namespace RevStackCore.Identity
         private void _setUserName(TUser user, string userName)
         {
             user.UserName = userName;
+            user.NormalizedUserName = userName.ToUpper();
             _userRepository.Update(user);
         }
 
