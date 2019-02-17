@@ -1328,8 +1328,8 @@ namespace RevStackCore.Identity
 
         private TUser _findByName(string userName)
         {
-            userName = userName.ToLower();
-            var result = _userRepository.Find(x => x.UserName.ToLower() == userName);
+            userName = userName.ToUpper();
+            var result = _userRepository.Find(x => x.NormalizedUserName == userName);
             return (TUser)result.ToSingleOrDefault();
         }
 
@@ -1481,8 +1481,8 @@ namespace RevStackCore.Identity
 
         private void _addToRole(TUser user, string roleName)
         {
-            roleName = roleName.ToLower();
-            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName).ToSingleOrDefault();
+            roleName = roleName.ToUpper();
+            var role = _roleRepository.Find(x => x.NormalizedName == roleName).ToSingleOrDefault();
             if(role!=null)
             {
                 var identityUserRole = CreateUserRole(user, role.Id);
@@ -1495,12 +1495,12 @@ namespace RevStackCore.Identity
 
         private void _removeFromRole(TUser user, string roleName)
         {
-            roleName = roleName.ToLower();
-            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName).ToSingleOrDefault();
+            roleName = roleName.ToUpper();
+            var role = _roleRepository.Find(x => x.NormalizedName == roleName).ToSingleOrDefault();
             if (role != null)
             {
-                string roleId = role.Id.ToString().ToLower();
-                var userRole = _userRoleRepository.Find(x => x.UserId.Equals(user.Id) && x.RoleId.ToLower() == roleId).ToSingleOrDefault();
+                string roleId = role.Id.ToString();
+                var userRole = _userRoleRepository.Find(x => x.UserId.Equals(user.Id) && x.RoleId == roleId).ToSingleOrDefault();
                 if(userRole !=null)
                 {
                     _userRoleRepository.Delete(userRole);
@@ -1510,12 +1510,12 @@ namespace RevStackCore.Identity
 
         private IList<TUser> _getUsersInRole(string roleName)
         {
-            roleName = roleName.ToLower();
-            var role = _roleRepository.Find(x => x.Name.ToLower() == roleName).ToSingleOrDefault();
+            roleName = roleName.ToUpper();
+            var role = _roleRepository.Find(x => x.NormalizedName == roleName).ToSingleOrDefault();
             if (role != null)
             {
-                string roleId = role.Id.ToString().ToLower();
-                var userRoles = _userRoleRepository.Find(x => x.RoleId.ToLower() == roleId);
+                string roleId = role.Id.ToString();
+                var userRoles = _userRoleRepository.Find(x => x.RoleId == roleId);
                 if (userRoles.Any())
                 {
                     return _listOfUsers(userRoles);
@@ -1548,7 +1548,7 @@ namespace RevStackCore.Identity
         {
             return roles
               .Join(_roleRepository.Get(), x => x.RoleId, r => r.Id.ToString(), (x, r) => new { x, r })
-              .Select(result => result.r.Name).ToList();
+              .Select(result => result.r.NormalizedName).ToList();
         }
 
         private bool _isInRole(TUser user, string roleName)
@@ -1556,8 +1556,8 @@ namespace RevStackCore.Identity
             var roles = _userRoleRepository.Find(x => x.UserId.Equals(user.Id));
             if (roles.Any())
             {
-                roleName = roleName.ToLower();
-                return _listOfRoles(roles).Select(x => x.ToLower() == roleName).SingleOrDefault();
+                roleName = roleName.ToUpper();
+                return _listOfRoles(roles).Select(x => x == roleName).SingleOrDefault();
             }
             else
             {
@@ -1639,8 +1639,8 @@ namespace RevStackCore.Identity
 
         private TUser _findByEmail(string email)
         {
-            email = email.ToLower();
-            return (TUser)_userRepository.Find(x => x.Email.ToLower() == email).ToSingleOrDefault();
+            email = email.ToUpper();
+            return (TUser)_userRepository.Find(x => x.NormalizedEmail == email).ToSingleOrDefault();
 ;        }
 
         private void _setPhoneNumber(TUser user, string phoneNumber)

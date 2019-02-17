@@ -3,13 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>RevStackCore.Identity</PackageId>
-    <PackageVersion>2.0.3</PackageVersion>
+    <PackageVersion>2.1.0</PackageVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Scott Francis, David Sheets</Authors>
     <Company>MIS</Company>
     <Description>RevStackCore implementation of the AspNetCore Identity framework.</Description>
     <PackageProjectUrl>https://github.com/RevStackCore/Identity.git</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/RevStackCore/Identity/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageIconUrl>https://s3.amazonaws.com/revstack/icons/revstackcore-64x64.png</PackageIconUrl>
     <Copyright>Copyright 2017</Copyright>
     <RepositoryUrl>https://github.com/RevStackCore/Identity.git</RepositoryUrl>
     <RepositoryType />
