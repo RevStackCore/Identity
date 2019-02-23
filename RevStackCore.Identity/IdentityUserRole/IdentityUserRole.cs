@@ -12,8 +12,8 @@ namespace RevStackCore.Identity
 
     public class IdentityUserRole<TKey> : IIdentityUserRole<TKey>
     {
-        public TKey Id { get; set; }
-        public TKey UserId { get; set; }
-        public string RoleId { get; set; }
+        public virtual TKey Id { get; set; }
+        public virtual TKey UserId { get; set; }
+        public virtual string RoleId { get; set; }
     }
 }

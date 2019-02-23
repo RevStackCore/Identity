@@ -14,10 +14,10 @@ namespace RevStackCore.Identity
 
     public class IdentityRoleClaim<TKey> : IIdentityRoleClaim<TKey>
     {
-        public TKey Id { get; set; }
-        public TKey RoleId { get; set; }
-        public string ClaimType { get; set;  }
-        public string ClaimValue { get; set; }
+        public virtual TKey Id { get; set; }
+        public virtual TKey RoleId { get; set; }
+        public virtual string ClaimType { get; set;  }
+        public virtual string ClaimValue { get; set; }
 
         public void InitializeFromClaim(Claim other)
         {

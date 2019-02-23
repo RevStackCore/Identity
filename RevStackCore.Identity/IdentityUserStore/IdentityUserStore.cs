@@ -397,7 +397,7 @@ namespace RevStackCore.Identity
                 throw new ArgumentNullException(nameof(claims));
             
             await Task.Run(() => _removeClaims(user, claims), cancellationToken);
-            //return Task.FromResult(true);
+           
         }
 
         /// <summary>
@@ -1568,7 +1568,6 @@ namespace RevStackCore.Identity
         private void _setPasswordHash(TUser user, string passwordHash)
         {
             user.PasswordHash = passwordHash;
-            if (_userExists(user.UserName)) _userRepository.Update(user);
         }
 
         private string _getPasswordHash(TUser user)
@@ -1584,7 +1583,6 @@ namespace RevStackCore.Identity
         private void _setSecurityStamp(TUser user, string stamp)
         {
             user.SecurityStamp = stamp;
-            if (_userExists(user.UserName)) _userRepository.Update(user);
         }
 
         private string _getSecurityStamp(TUser user)
@@ -1596,7 +1594,6 @@ namespace RevStackCore.Identity
         {
             user.Email = email;
             user.NormalizedEmail = email.ToUpper();
-            if(_userExists(user.UserName)) _userRepository.Update(user);
         }
 
         private string _getEmail(TUser user)
@@ -1607,7 +1604,7 @@ namespace RevStackCore.Identity
         private void _setNormalizedEmail(TUser user, string normalizedEmail)
         {
             user.NormalizedEmail = normalizedEmail;
-            if (_userExists(user.UserName)) _userRepository.Update(user);
+
         }
 
         private string _getNormalizedEmail(TUser user)
@@ -1618,7 +1615,6 @@ namespace RevStackCore.Identity
         private void _setNormalizedUserName(TUser user, string normalizedUserName)
         {
             user.NormalizedUserName = normalizedUserName;
-            if (_userExists(user.UserName)) _userRepository.Update(user);
         }
 
         private string _getNormalizedUserName(TUser user)
@@ -1634,7 +1630,6 @@ namespace RevStackCore.Identity
         private void _setEmailConfirmed(TUser user, bool confirmed)
         {
             user.EmailConfirmed = confirmed;
-            _userRepository.Update(user);
         }
 
         private TUser _findByEmail(string email)
@@ -1674,7 +1669,6 @@ namespace RevStackCore.Identity
         private void _setLockoutEndDate(TUser user, DateTimeOffset? lockoutEnd)
         {
             user.LockoutEndDate = lockoutEnd;
-            _userRepository.Update(user);
         }
 
         private int _incrementAccessFailedCount(TUser user)
@@ -1704,7 +1698,6 @@ namespace RevStackCore.Identity
         {
             user.UserName = userName;
             user.NormalizedUserName = userName.ToUpper();
-            _userRepository.Update(user);
         }
 
         private bool _getLockoutEnabled(TUser user)
@@ -1715,13 +1708,11 @@ namespace RevStackCore.Identity
         private void _setLockoutEnabled(TUser user, bool enabled)
         {
             user.IsLockoutEnabled = enabled;
-            _userRepository.Update(user);
         }
 
         private void _setTwoFactorEnabled(TUser user, bool enabled)
         {
             user.IsTwoFactorEnabled = enabled;
-            _userRepository.Update(user);
         }
 
         private bool _getTwoFactorEnabled(TUser user)

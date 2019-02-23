@@ -12,13 +12,13 @@ namespace RevStackCore.Identity
 
     public class IdentityUserLogin<TKey> : IIdentityUserLogin<TKey>
     {
-        public TKey Id { get; set; }
-        public string LoginProvider { get; set; }
-        public string ProviderKey { get; set; }
+        public virtual TKey Id { get; set; }
+        public virtual string LoginProvider { get; set; }
+        public virtual string ProviderKey { get; set; }
         /// <summary>
 		///     Gets or sets the friendly name used in a UI for this login.
 		/// </summary>
 		public virtual string ProviderDisplayName { get; set; }
-        public TKey UserId { get; set; }
+        public virtual TKey UserId { get; set; }
     }
 }

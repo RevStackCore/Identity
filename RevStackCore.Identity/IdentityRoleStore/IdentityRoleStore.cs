@@ -176,7 +176,7 @@ namespace RevStackCore.Identity
             if (role == null)
                 throw new ArgumentNullException(nameof(role));
             role.Name = roleName;
-            return Task.Run(() => _update(role), cancellationToken);
+            return Task.CompletedTask;
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace RevStackCore.Identity
             if (role == null)
                 throw new ArgumentNullException(nameof(role));
             role.NormalizedName = normalizedName;
-            return Task.Run(() => _update(role), cancellationToken);
+            return Task.CompletedTask;
         }
 
         /// <summary>
