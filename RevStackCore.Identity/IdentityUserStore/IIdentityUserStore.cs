@@ -8,7 +8,10 @@ namespace RevStackCore.Identity
        IUserPhoneNumberStore<TUser>, IUserLockoutStore<TUser>, IUserTwoFactorStore<TUser>, IUserAuthenticationTokenStore<TUser>,
        IQueryableUserStore<TUser>
        where TUser : class,IIdentityUser<TKey>
+       
     {
 
     }
+
+   
 }
