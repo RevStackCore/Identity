@@ -1372,7 +1372,7 @@ namespace RevStackCore.Identity
 
         private IList<UserLoginInfo> _getLogins(TUser user)
         {
-            var logins = _userLoginRepository.Find(x => x.UserId.Equals(user.Id));
+            var logins = _userLoginRepository.Find(x => x.UserId.Equals(user.Id)).ToList();
             if(logins.Any())
             {
                 return logins.Select(x => new UserLoginInfo(x.LoginProvider, x.ProviderKey, x.ProviderDisplayName)).ToList();
@@ -1407,7 +1407,7 @@ namespace RevStackCore.Identity
 
         private void _replaceUserClaim(TUser user, Claim claim, Claim newClaim)
         {
-            var userClaims = _userClaimRepository.Find(x => x.UserId.Equals(user.Id) && x.ClaimType == claim.Type && x.ClaimValue == claim.Value);
+            var userClaims = _userClaimRepository.Find(x => x.UserId.Equals(user.Id) && x.ClaimType == claim.Type && x.ClaimValue == claim.Value).ToList();
             if (userClaims.Any())
             {
                 var userClaim = userClaims.FirstOrDefault();
@@ -1420,7 +1420,7 @@ namespace RevStackCore.Identity
 
         private IList<Claim> _getClaims(TUser user)
         {
-            var userClaims = _userClaimRepository.Find(x => x.UserId.Equals(user.Id));
+            var userClaims = _userClaimRepository.Find(x => x.UserId.Equals(user.Id)).ToList();
             if(userClaims.Any())
             {
                 return userClaims.Select(x => new Claim(x.ClaimType, x.ClaimType)).ToList();
@@ -1454,7 +1454,7 @@ namespace RevStackCore.Identity
 
         private void _removeClaim(TUser user, Claim claim)
         {
-            var userClaims = _userClaimRepository.Find(x => x.ClaimType == claim.Type && x.ClaimValue == claim.Value && x.UserId.Equals(user.Id));
+            var userClaims = _userClaimRepository.Find(x => x.ClaimType == claim.Type && x.ClaimValue == claim.Value && x.UserId.Equals(user.Id)).ToList();
             if(userClaims.Any())
             {
                 var userClaim = userClaims.ToSingleOrDefault();
@@ -1464,7 +1464,7 @@ namespace RevStackCore.Identity
 
         private IList<TUser> _getUsersForClaim(Claim claim)
         {
-            var userClaims = _userClaimRepository.Find(x => x.ClaimType == claim.Type && x.ClaimValue == claim.Value);
+            var userClaims = _userClaimRepository.Find(x => x.ClaimType == claim.Type && x.ClaimValue == claim.Value).ToList();
             if (userClaims.Any())
             {
                 return _listOfUsers(userClaims);
@@ -1472,7 +1472,7 @@ namespace RevStackCore.Identity
             return default(List<TUser>);
         }
 
-        private List<TUser> _listOfUsers(IQueryable<TUserClaim> userClaims)
+        private List<TUser> _listOfUsers(IEnumerable<TUserClaim> userClaims)
         {
             return userClaims
               .Join(_userRepository.Get(), x => x.UserId, r => r.Id, (x, r) => new { x, r })
@@ -1515,7 +1515,7 @@ namespace RevStackCore.Identity
             if (role != null)
             {
                 string roleId = role.Id.ToString();
-                var userRoles = _userRoleRepository.Find(x => x.RoleId == roleId);
+                var userRoles = _userRoleRepository.Find(x => x.RoleId == roleId).ToList();
                 if (userRoles.Any())
                 {
                     return _listOfUsers(userRoles);
@@ -1524,7 +1524,7 @@ namespace RevStackCore.Identity
             return default(List<TUser>);
         }
 
-        private List<TUser> _listOfUsers(IQueryable<IIdentityUserRole<TKey>> roles)
+        private List<TUser> _listOfUsers(IEnumerable<IIdentityUserRole<TKey>> roles)
         {
             return roles
               .Join(_userRepository.Get(), x => x.UserId, r => r.Id, (x, r) => new { x, r })
@@ -1533,7 +1533,7 @@ namespace RevStackCore.Identity
 
         private IList<string> _getRoles(TUser user)
         {
-            var roles = _userRoleRepository.Find(x => x.UserId.Equals(user.Id));
+            var roles = _userRoleRepository.Find(x => x.UserId.Equals(user.Id)).ToList();
             if(roles.Any())
             {
                 return _listOfRoles(roles);
@@ -1544,7 +1544,7 @@ namespace RevStackCore.Identity
             }
         }
 
-        private List<string> _listOfRoles(IQueryable<IIdentityUserRole<TKey>> roles)
+        private List<string> _listOfRoles(IEnumerable<IIdentityUserRole<TKey>> roles)
         {
             return roles
               .Join(_roleRepository.Get(), x => x.RoleId, r => r.Id.ToString(), (x, r) => new { x, r })
@@ -1553,7 +1553,7 @@ namespace RevStackCore.Identity
 
         private bool _isInRole(TUser user, string roleName)
         {
-            var roles = _userRoleRepository.Find(x => x.UserId.Equals(user.Id));
+            var roles = _userRoleRepository.Find(x => x.UserId.Equals(user.Id)).ToList();
             if (roles.Any())
             {
                 roleName = roleName.ToUpper();
